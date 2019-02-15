@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="american" format="json">
+      <types:shape format="weave" example="examples/american-flights-example.json.txt"><![CDATA[%dw 2.0
+type american = Array<{|
+  ID: Number {"typeId": "int"}, 
+  code: String, 
+  price: Number {"typeId": "int"}, 
+  departureDate: String, 
+  origin: String, 
+  destination: String, 
+  emptySeats: Number {"typeId": "int"}, 
+  plane: {|
+    "type": String, 
+    totalSeats: Number {"typeId": "int"}
+  |}
+|}> {"MetadataFormat": "json",
+"example": "[{\"ID\":1,\"code\":\"ER38sd\",\"price\":400,\"departureDate\":\"2016\/03\/20\",\"origin\":\"MUA\",\"destination\":\"SFO\",\"emptySeats\":0,\"plane\":{\"type\":\"Boeing 737\",\"totalSeats\":150}},{\"ID\":2,\"code\":\"ER45if\",\"price\":345.99,\"departureDate\":\"2016\/02\/11\",\"origin\":\"MUA\",\"destination\":\"LAX\",\"emptySeats\":52,\"plane\":{\"type\":\"Boeing 777\",\"totalSeats\":300}}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#cdd7d25d-26e1-4c9d-a9fb-08353752744c">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="american"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#58a1e50c-daa3-40b9-8ba3-0696e8eecaef">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="american"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
